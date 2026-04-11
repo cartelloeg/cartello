@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartello – Shop</title>  
+    <link rel="stylesheet" href="mystyle.css">
+</head>
+<body>
+ <header class="website-header">
+    <div class="container nav">
+<a href="index.html"  class="logo">Cartello</a>
+<nav class="navbar" id="navbar">
+     <a href="index.html">Home</a>
+     <a href="shop.html" class="active">Shop</a>
+     <a href="cart.html">Cart</a>
+     <a href="checkout.html">Checkout</a>
+     <a href="login.html">Login</a>   
+     <a href="admin.html">Admin</a>
+</nav>
+<div class="header-tools">
+<form class="search-form" onsubmit="event.preventDefault();">
+    <input 
+        class="search-input" 
+        type="search" 
+        id="product-search" 
+        placeholder="Search products" 
+        oninput="filterProducts()"
+    >
+    <button class="search-button" type="submit">Search</button>
+</form>
+<a class="cart-link" href="cart.html">🛒 Cart
+    <span class="cart-badge" id="cart-badge">0</span>
+</a>
+</div>
+</div>
+</header>
+
+<main>
+    <section class="shop-hero">
+      <div class="shop-hero-content">
+        <p class="shop-label">Shop</p>
+        <h1>Browse products</h1>
+        <p>Use the search bar to quickly filter products by name or description.</p>
+      </div>
+    </section>
+
+    <section class="products-section">
+      <div id="no-results" style="display: none; text-align: center; padding: 20px;">
+    <h3>No products found</h3>
+</div>
+
+
+     <div class="products-grid"> <div class="product-card" id="qty-container-1">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&q=80" alt="Premium Watch" class="product-image" loading="lazy">
+          <div class="product-info">
+            <h3 class="product-title">Premium Watch</h3>
+            <p class="product-price">$199.00</p>
+            <button class="add-to-cart-btn" onclick="initQuantity(1, this)">Add to Cart</button>
+            <div class="qty-selector" style="display: none;">
+              <button class="qty-btn" onclick="changeQty(1, -1)">-</button>
+              <span class="qty-number">1</span>
+              <button class="qty-btn" onclick="changeQty(1, 1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" id="qty-container-2">
+          <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=400&q=80" alt="Leather Bag" class="product-image" loading="lazy">
+          <div class="product-info">
+            <h3 class="product-title">Leather Bag</h3>
+            <p class="product-price">$85.00</p>
+            <button class="add-to-cart-btn" onclick="initQuantity(2, this)">Add to Cart</button>
+            <div class="qty-selector" style="display: none;">
+              <button class="qty-btn" onclick="changeQty(2, -1)">-</button>
+              <span class="qty-number">1</span>
+              <button class="qty-btn" onclick="changeQty(2, 1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" id="qty-container-3">
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=400&q=80" alt="Headphones" class="product-image" loading="lazy">
+          <div class="product-info">
+            <h3 class="product-title">Wireless Headphones</h3>
+            <p class="product-price">$150.00</p>
+            <button class="add-to-cart-btn" onclick="initQuantity(3, this)">Add to Cart</button>
+            <div class="qty-selector" style="display: none;">
+              <button class="qty-btn" onclick="changeQty(3, -1)">-</button>
+              <span class="qty-number">1</span>
+              <button class="qty-btn" onclick="changeQty(3, 1)">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" id="qty-container-4">
+          <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&q=80" alt="Smart Speaker" class="product-image" loading="lazy">
+          <div class="product-info">
+            <h3 class="product-title">Smart Speaker</h3>
+            <p class="product-price">$120.00</p>
+            <button class="add-to-cart-btn" onclick="initQuantity(4, this)">Add to Cart</button>
+            <div class="qty-selector" style="display: none;">
+              <button class="qty-btn" onclick="changeQty(4, -1)">-</button>
+              <span class="qty-number">1</span>
+              <button class="qty-btn" onclick="changeQty(4, 1)">+</button>
+            </div>
+          </div>
+        </div>
+
+      </div> </section>
+</main>
+
+<footer class="page-footer">
+    <div class="footer-content">
+    <div>
+        <h3>Cartello</h3>
+        <p>Since 2026</p>
+      </div>
+      <div>
+        <p>Email: ziad@cartello.com</p>
+        <p>Phone: +20 111 81 00000</p>
+      </div>
+      </div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
