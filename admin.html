@@ -30,46 +30,23 @@
 </div>
 </header>
 <main>
-    <!-- Sidebar -->
-<div class="sidebar">
-  <h2>Admin</h2>
-  <button onclick="showPage('dashboard')">Dashboard</button>
-  <button onclick="showPage('products')">Products</button>
-  <button onclick="showPage('orders')">Orders</button>
-</div>
+  <aside class="admin-sidebar">
+    <nav class="admin-nav">
+        <button class="admin-link active" onclick="loadTab('dashboard')">📊 Dashboard</button>
+        <button class="admin-link" onclick="loadTab('products')">📦 Products</button>
+        <button class="admin-link" onclick="loadTab('categories')">📁 Categories</button>
+        <button class="admin-link" onclick="loadTab('orders')">🛒 Orders</button>
+        <button class="admin-link" onclick="loadTab('users')">👥 Users</button>
+        <button class="admin-link" onclick="loadTab('reports')">📈 Reports</button>
+        <button class="admin-link" onclick="loadTab('shipping')">🚚 Shipping</button>
+        <button class="admin-link" onclick="loadTab('policy')">📜 Policies</button>
+    </nav>
+</aside>
 
-<!-- Content -->
-<div class="content">
-
-  <!-- Dashboard -->
-  <div id="dashboard">
-    <h2>Dashboard</h2>
-    <div class="card"><h3 id="ordersCount">2</h3><p>Orders</p></div>
-    <div class="card"><h3 id="productsCount">0</h3><p>Products</p></div>
-  </div>
-
-  <!-- Products -->
-  <div id="products" class="hidden">
-    <h2>Product Management</h2>
-
-    <input type="text" id="productName" placeholder="Product Name">
-    <button onclick="addProduct()">Add</button>
-
-    <ul id="productList"></ul>
-  </div>
-
-  <!-- Orders -->
-  <div id="orders" class="hidden">
-    <h2>Order Management</h2>
-
-    <div class="order">
-      <p>Order #1</p>
-      <p>Status: <span id="status1">Pending</span></p>
-      <button onclick="updateStatus()">Mark Delivered</button>
-    </div>
-  </div>
-
-</div>
+<section class="admin-content" id="admin-panel-content">
+    <h2>Welcome, Admin</h2>
+    <p>Select a module from the left to manage Cartello.</p>
+</section>
 </main>
 <footer class="page-footer">
     <div class="footer-content">
