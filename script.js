@@ -376,18 +376,28 @@ function updateProfile() {
     }
 }
 function joinNow() {
-    const val = id => document.getElementById(id).value.trim();
-    const [name, email, pass, confirm] = [val('reg-name'), val('reg-email'), val('reg-pass'), val('reg-confirm')];
+    console.log("Join Now button clicked!"); 
+    const name = document.getElementById('reg-name').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const pass = document.getElementById('reg-pass').value;
+    const confirm = document.getElementById('reg-confirm').value;
+    if (!name || !email || !pass || !confirm) {
+        alert("Please fill in all fields.");
+        return;
+    }
+    if (pass !== confirm) {
+        alert("Passwords do not match.");
+        return;
+    }
+    if(document.getElementById('sidebar-name')) document.getElementById('sidebar-name').textContent = name;
+    if(document.getElementById('sidebar-email')) document.getElementById('sidebar-email').textContent = email;
+    if(document.getElementById('sidebar-avatar')) document.getElementById('sidebar-avatar').textContent = name.substring(0, 2).toUpperCase();
 
-    if (!name || !email || !pass) return alert("Fill all fields!");
-    if (pass.length < 6) return alert("Password too short (6+ chars).");
-    if (pass !== confirm) return alert("Passwords don't match!");
-
-    document.getElementById('sidebar-name').textContent = name;
-    document.getElementById('sidebar-avatar').textContent = name.slice(0, 2).toUpperCase();
-    document.getElementById('sidebar-email').textContent = email;
-    mockLogin();
-    alert("Account created successfully!");
+    document.getElementById('auth-area').style.display = 'none';
+    document.getElementById('dashboard-area').style.display = 'block';
+    
+    window.scrollTo(0, 0);
+    alert("Welcome " + name + "!");
 }
 
 
