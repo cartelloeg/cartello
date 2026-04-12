@@ -64,8 +64,6 @@ function renderProducts(productsToDisplay) {
   grid.innerHTML = htmlContent;
 }
 
-// 3. Call the function when the page loads so the products appear
-renderProducts(products);
 /**
  * SEARCH FUNCTION:
  * Filters products based on the text typed in the search bar.
@@ -284,90 +282,66 @@ window.onload = function () {
 };
 function renderCart() {
     let cartContainer = document.getElementById("cart-items");
-
     let cart = JSON.parse(localStorage.getItem("cart")) || {};
 
-    // لو الكارت فاضي
+    // If the cart is empty
     if (Object.keys(cart).length === 0) {
-    cartContainer.innerHTML = `
-        <div class="empty-cart">
-            <h2>Your cart is empty</h2>
-            <p>Add items to get started</p>
-            <button id="go-shopping" onclick="goToShop()">
-                Go Shopping
-            </button>
-            <img class="empcart" 
-            src="https://thumbs.dreamstime.com/b/realistic-empty-supermarket-shopping-cart-vector-illustration-isolated-white-background-realistic-empty-supermarket-shopping-118192710.jpg" 
-            alt="empty cart">
-        </div>
-    `;
-    return;
-}
-
-    // امسح رسالة "empty cart"
-    cartContainer.innerHTML = "";
-
-    // المنتجات (مؤقتًا)
-    let products = {
-    1: { 
-        name: "Premium Watch", 
-        price: 199,
-        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30"
-    },
-    2: { 
-        name: "Leather Bag", 
-        price: 85,
-        image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa"
-    },
-    3: { 
-        name: "Wireless Headphones", 
-        price: 150,
-        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
-    },
-    4: { 
-        name: "Smart Speaker", 
-        price: 120,
-        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff"
+        cartContainer.innerHTML = `
+            <div class="empty-cart">
+                <h2>Your cart is empty</h2>
+                <p>Add items to get started</p>
+                <button id="go-shopping" onclick="goToShop()">
+                    Go Shopping
+                </button>
+                <img class="empcart" 
+                src="https://thumbs.dreamstime.com/b/realistic-empty-supermarket-shopping-cart-vector-illustration-isolated-white-background-realistic-empty-supermarket-shopping-118192710.jpg" 
+                alt="empty cart">
+            </div>
+        `;
+        return;
     }
-};
+
+    // Clear the container
+    cartContainer.innerHTML = "";
     let total = 0;
 
     for (let id in cart) {
-        let item = products[id];
+        // THE FIX: We use '.find()' to grab the correct item from YOUR global array at the top!
+        let item = products.find(p => p.id == id);
         let qty = cart[id];
+
+        // Safety check just in case
+        if (!item) continue;
 
         let itemTotal = item.price * qty;
         total += itemTotal;
 
-     cartContainer.innerHTML += `
-    <div class="cart-card">
-        <img src="${item.image}" class="cart-img">
-
-        <div class="cart-info">
-            <h3>${item.name}</h3>
-            <p>Price: $${item.price}</p>
-
-            <div class="cart-controls">
-                <button onclick="changeCartQty(${id}, -1)">-</button>
-                <span>${qty}</span>
-                <button onclick="changeCartQty(${id}, 1)">+</button>
+        cartContainer.innerHTML += `
+        <div class="cart-card">
+            <img src="${item.image}" class="cart-img">
+            <div class="cart-info">
+                <h3>${item.name}</h3>
+                <p>Price: $${item.price.toFixed(2)}</p>
+                <div class="cart-controls">
+                    <button onclick="changeCartQty(${id}, -1)">-</button>
+                    <span>${qty}</span>
+                    <button onclick="changeCartQty(${id}, 1)">+</button>
+                </div>
+                <p>Total: $${itemTotal.toFixed(2)}</p>
+                <button class="remove-btn" onclick="removeItem(${id})">
+                    Remove
+                </button>
             </div>
-
-            <p>Total: $${itemTotal}</p>
-
-            <button class="remove-btn" onclick="removeItem(${id})">
-                Remove
-            </button>
         </div>
-    </div>
-    `;
+        `;
     }
 
-    // عرض الإجمالي
+    // Display the Total
     cartContainer.innerHTML += `
-        <h2>Total: $${total}</h2>
+        <h2>Total: $${total.toFixed(2)}</h2>
     `;
 }
+
 function changeCartQty(id, delta) {
     let cart = JSON.parse(localStorage.getItem("cart")) || {};
 
@@ -380,16 +354,23 @@ function changeCartQty(id, delta) {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+    
+    // THE FIX: Sync the global cartData variable so the red badge updates!
+    cartData = cart; 
 
     renderCart();
     updateCartBadge();
 }
+
 function removeItem(id) {
     let cart = JSON.parse(localStorage.getItem("cart")) || {};
 
     delete cart[id];
 
     localStorage.setItem("cart", JSON.stringify(cart));
+    
+    // THE FIX: Sync the global cartData variable
+    cartData = cart;
 
     renderCart();
     updateCartBadge();
