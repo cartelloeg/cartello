@@ -16,7 +16,6 @@
      <a href="cart.html">Cart</a>
      <a href="checkout.html">Checkout</a>
      <a href="login.html" class="active">Login</a>   
-     <a href="admin.html">Admin</a>
 </nav>
 <div class="header-tools">
 <a class="cart-link" href="cart.html">🛒 Cart
@@ -44,8 +43,11 @@
                 <a href="#" onclick="showForm('forgot-view')">Forgot password?</a>
             </div><br>
                 <button class="prime-btn" onclick="mockLogin()">Sign In</button>
-                <p class="footer-link">New? <a href="#" onclick="showForm('register-view')">Create account</a></p>
-            </div>
+<p class="footer-link">New? <a href="#" onclick="showForm('register-view')">Create account</a></p>
+<p class="footer-link" style="margin-top:10px; text-align:center;">
+    <a href="#" onclick="showForm('admin-login-view')" style="color:#888; font-size:13px;">Admin login</a>
+</p>
+</div>
 
     <div id="register-view" class="auth-box">
     <h2>Create Account</h2>
@@ -67,6 +69,20 @@
     </div>
     <button type="button" class="prime-btn" onclick="joinNow()">Join Now</button>
             </div>
+            <div id="admin-login-view" class="auth-box">
+    <h2>Admin Login</h2>
+    <p class="subtitle">Restricted access — staff only</p>
+    <div class="input-field">
+        <label>Admin Email</label>
+        <input type="email" id="admin-email" placeholder="admin@cartello.com">
+    </div>
+    <div class="input-field">
+        <label>Password</label>
+        <input type="password" id="admin-pass" placeholder="admin123">
+    </div>
+    <button class="prime-btn" onclick="adminLogin()">Access Dashboard</button>
+    <p class="footer-link" style="margin-top:12px;"><a href="#" onclick="showForm('login-form')">← Back to Login</a></p>
+</div>
             <div id="forgot-view" class="auth-box">
                 <h2>Reset</h2>
                 <div class="input-field">

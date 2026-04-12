@@ -417,6 +417,20 @@ const mockLogin = () => {
     document.getElementById('dashboard-area').style.display = 'block';
 };
 
+function adminLogin() {
+    const email = document.getElementById('admin-email').value.trim();
+    const pass = document.getElementById('admin-pass').value;
+
+    const ADMIN_EMAIL = 'admin@cartello.com';
+    const ADMIN_PASS = 'admin123';
+
+    if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
+        window.location.href = 'admin.html';
+    } else {
+        alert('Invalid admin credentials. Please try again.');
+    }
+}
+
 function updateProfile() {
     const nameInput = document.getElementById('edit-full-name');
     const emailInput = document.getElementById('edit-email'); 
