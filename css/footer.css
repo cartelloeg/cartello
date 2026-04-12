@@ -1,0 +1,26 @@
+.page-footer {
+  background: #111;
+  color: #fff;
+  padding: 40px 20px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: min(1120px, 92%);
+  margin: 0 auto;
+}
+
+.page-footer h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: 5px;
+}
+
+.page-footer p {
+  color: #aaa;
+  font-size: 14px;
+  margin-bottom: 4px;
+}

@@ -1,0 +1,78 @@
+.admin-layout {
+  display: flex;
+  flex: 1;
+}
+
+.admin-sidebar {
+  width: 240px;
+  background: #f9f9f9;
+  border-right: 1px solid #ebebeb;
+  padding: 20px 0;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-link {
+  background: none;
+  border: none;
+  padding: 15px 25px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  color: dimgray;
+  transition: 0.3s;
+}
+
+.admin-link:hover,
+.admin-link.active {
+  background: #fff;
+  color: black;
+  border-left: 4px solid black;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 40px;
+  background: #fff;
+}
+
+/* Admin Table */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ebebeb;
+  text-align: left;
+}
+
+.admin-table th {
+  background: #f4f4f4;
+  font-size: 14px;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.status-shipped {
+  background: #e1f5fe;
+  color: #03a9f4;
+}
+
+.status-pending {
+  background: #fff3e0;
+  color: #ff9800;
+}
