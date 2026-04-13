@@ -27,9 +27,55 @@
 </div>
 </div>
 </header>
-<main>
-   
-</main>
+
+ <main>
+    <section class="checkout-page">
+      <div class="checkout-grid">
+        <div class="checkout-form-box">
+          <h2>Checkout</h2>
+          <p class="checkout-subtitle">Enter your details to place your order.</p>
+
+          <form id="checkout-form" onsubmit="placeOrder(event)">
+            <div class="input-field">
+              <label>Full Name</label>
+              <input type="text" id="customer-name" placeholder="Your full name" required>
+            </div>
+
+            <div class="input-field">
+              <label>Email</label>
+              <input type="email" id="customer-email" placeholder="you@example.com" required>
+            </div>
+
+            <div class="input-field">
+              <label>Phone</label>
+              <input type="text" id="customer-phone" placeholder="+20 1xx xxx xxxx" required>
+            </div>
+
+            <div class="input-field">
+              <label>Address</label>
+              <input type="text" id="customer-address" placeholder="Street, City, Area" required>
+            </div>
+
+            <div class="input-field">
+              <label>Payment Method</label>
+              <select id="payment-method" required>
+                <option value="">Select payment method</option>
+                <option value="Cash on Delivery">Cash on Delivery</option>
+              </select>
+            </div>
+
+            <button type="submit" class="checkout-btn">Place Order</button>
+          </form>
+        </div>
+
+        <div class="checkout-summary-box">
+          <h2>Order Summary</h2>
+          <div id="checkout-items"></div>
+          <div id="checkout-total" class="checkout-total"></div>
+        </div>
+      </div>
+    </section>
+  </main>
 
 <footer class="page-footer">
     <div class="footer-content">
