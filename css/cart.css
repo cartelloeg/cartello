@@ -17,12 +17,6 @@
   background: #fff;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
-.cart-card:hover {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  transform: translateY(-3px);
-}
-
 .cart-img {
   width: 110px;
   height: 110px;
@@ -87,8 +81,8 @@
 
 .empty-cart {
   text-align: center;
-  margin-top: 80px;
   font-size: 25px;
+  padding-top: 20px;
 }
 
 #go-shopping {
