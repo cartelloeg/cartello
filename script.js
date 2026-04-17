@@ -563,3 +563,11 @@ function cancelUI(btn) {
         btn.remove();
     }
 }
+const menuToggle = document.getElementById("menu-toggle");
+const navbar = document.getElementById("navbar");
+
+if (menuToggle && navbar) {
+  menuToggle.addEventListener("click", function () {
+    navbar.classList.toggle("show");
+  });
+}
