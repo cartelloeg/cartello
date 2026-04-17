@@ -571,3 +571,98 @@ if (menuToggle && navbar) {
     navbar.classList.toggle("show");
   });
 }
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function isValidPhone(phone) {
+  return /^(\+?\d[\d\s-]{9,})$/.test(phone.trim());
+}
+
+function placeOrder(event) {
+  event.preventDefault();
+
+  const name = document.getElementById("customer-name").value.trim();
+  const email = document.getElementById("customer-email").value.trim();
+  const phone = document.getElementById("customer-phone").value.trim();
+  const address = document.getElementById("customer-address").value.trim();
+  const paymentMethod = document.getElementById("payment-method").value;
+
+  const cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+  if (Object.keys(cart).length === 0) {
+    alert("Your cart is empty.");
+    return;
+  }
+
+  if (name.length < 3) {
+    alert("Please enter a valid full name.");
+    return;
+  }
+
+  if (!isValidEmail(email)) {
+    alert("Please enter a valid email address.");
+    return;
+  }
+
+  if (!isValidPhone(phone)) {
+    alert("Please enter a valid phone number.");
+    return;
+  }
+
+  if (address.length < 8) {
+    alert("Please enter a complete address.");
+    return;
+  }
+
+  if (paymentMethod === "") {
+    alert("Please select a payment method.");
+    return;
+  }
+
+  alert("Order placed successfully!");
+  localStorage.removeItem("cart");
+  cartData = {};
+  window.location.href = "cart.html";
+}
+
+function validateLogin() {
+  const email = document.getElementById("login-email").value.trim();
+  const password = document.getElementById("login-pass").value.trim();
+
+  if (!email || !password) {
+    alert("Please enter both email and password.");
+    return;
+  }
+
+  if (!isValidEmail(email)) {
+    alert("Please enter a valid email address.");
+    return;
+  }
+
+  if (password.length < 6) {
+    alert("Password must be at least 6 characters.");
+    return;
+  }
+
+  mockLogin();
+}
+
+function validateForgotPassword() {
+  const forgotInput = document.querySelector("#forgot-view input[type='email']");
+  const email = forgotInput.value.trim();
+
+  if (!email) {
+    alert("Please enter your email address.");
+    return;
+  }
+
+  if (!isValidEmail(email)) {
+    alert("Please enter a valid email address.");
+    return;
+  }
+
+  alert("Reset link sent successfully!");
+  forgotInput.value = "";
+  showForm("login-form");
+}

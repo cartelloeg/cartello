@@ -38,7 +38,7 @@
                 <p class="subtitle">Log in to your account</p>
                 <div class="input-field">
                 <label>Email</label>
-                <input type="text" id="login-email" placeholder="Email Address">
+                <input type="email" id="login-email" placeholder="Email Address">
             </div>
                 <div class="input-field">
                 <label>Password</label>
@@ -47,7 +47,8 @@
                 <div class="form-options">
                 <a href="#" onclick="showForm('forgot-view')">Forgot password?</a>
             </div><br>
-                <button class="prime-btn" onclick="mockLogin()">Sign In</button>
+<button class="prime-btn" type="button" onclick="validateLogin()">Sign In</button>
+                
 <p class="footer-link">New? <a href="#" onclick="showForm('register-view')">Create account</a></p>
 <p class="footer-link" style="margin-top:10px; text-align:center;">
     <a href="#" onclick="showForm('admin-login-view')" style="color:#888; font-size:13px;">Admin login</a>
@@ -93,7 +94,7 @@
                 <div class="input-field">
                 <label>Email</label>
                 <input type="email" placeholder="Email Addresses"></div>
-                <button class="prime-btn">Send Link</button>
+                <button class="prime-btn" type="button" onclick="validateForgotPassword()">Send Link</button>
                 <p class="footer-link"><a href="#" onclick="showForm('login-form')">Back</a></p>
             </div>
         </div>
