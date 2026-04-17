@@ -33,8 +33,152 @@ const products = [
     price: 120.0,
     image: "https://images.unsplash.com/photo-1586078875290-c22eb791ad5d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ,
     category: "Electronics"
+  },
+  {
+    id: 5,
+    name: "Running Shoes",
+    price: 110.0,
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&q=80", 
+    category: "Accessories"
+  },
+ {
+    id: 6,
+    name: "Wireless Mouse",
+    price: 45.0,
+    image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=400&q=80",
+    category: "Electronics"
+  },
+  {
+    id: 7,
+    name: "Mechanical Keyboard",
+    price: 135.0,
+    image: "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=400&q=80",
+    category: "Electronics"
+  },
+  {
+    id: 8,
+    name: "Polarized Sunglasses",
+    price: 65.0,
+    image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=400&q=80",
+    category: "Accessories"
+  },
+  {
+    id: 9,
+    name: "Classic Canvas Backpack",
+    price: 55.0,
+    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&q=80",
+    category: "Accessories"
+  },
+  {
+    id: 10,
+    name: "Fitness Tracker Band",
+    price: 90.0,
+    image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?auto=format&fit=crop&w=400&q=80",
+    category: "Electronics"
+  },
+  {
+    id: 11,
+    name: "Minimalist Wallet",
+    price: 35.0,
+    image: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=400&q=80",
+    category: "Accessories"
+  },
+  {
+    id: 12,
+    name: "Noise-Canceling Earbuds",
+    price: 180.0,
+    image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=400&q=80",
+    category: "Electronics"
+  },
+  {
+    id: 13,
+    name: "Modern Desk Lamp",
+    price: 40.0,
+    image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=400&q=80",
+    category: "Electronics"
+  },
+  {
+    id: 14,
+    name: "Insulated Coffee Thermos",
+    price: 28.0,
+    image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=400&q=80",
+    category: "Accessories"
+  },
+  {
+    id: 15,
+    name: "Portable Power Bank",
+    price: 50.0,
+    image: "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=400&q=80",
+    category: "Electronics"
+  },
+
+  {
+    id: 16,
+    name: "Hydrating Face Cleanser",
+    price: 24.0,
+    image: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=400&q=80",
+    category: "Skin Care"
+  },
+  {
+    id: 17,
+    name: "Vitamin C Serum",
+    price: 35.0,
+    image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
+    category: "Skin Care"
+  },
+  {
+    id: 18,
+    name: "Daily SPF 50 Sunscreen",
+    price: 28.0,
+    image: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=400&q=80",
+    category: "Skin Care"
+  },
+  {
+    id: 19,
+    name: "Purifying Clay Mask",
+    price: 22.0,
+    image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=400&q=80",
+    category: "Skin Care"
+  },
+  {
+    id: 20,
+    name: "Night Repair Cream",
+    price: 45.0,
+    image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=400&q=80",
+    category: "Skin Care"
+  },
+
+ 
+  {
+    id: 21,
+    name: "Extra Virgin Olive Oil",
+    price: 18.0,
+    image: "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=400&q=80",
+    category: "Grocery"
+  },
+  {
+    id: 22,
+    name: "Artisan Coffee Beans",
+    price: 20.0,
+    image: "https://images.unsplash.com/photo-1559525839-b184a4d698c7?auto=format&fit=crop&w=400&q=80",
+    category: "Grocery"
+  },
+  {
+    id: 23,
+    name: "Whole Wheat Pasta",
+    price: 5.0,
+    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=400&q=80",
+    category: "Grocery"
+  },
+  {
+    id: 24,
+    name: "Fresh Green Apples",
+    price: 8.0,
+    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&q=80",
+    category: "Grocery"
   }
 ];
+
 
 // ==========================================================================
 // 2. INITIALIZATION & GLOBAL UTILITIES
