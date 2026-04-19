@@ -188,7 +188,19 @@ window.onload = function () {
   updateCartBadge();
   initMobileMenu();
 
-  // ---> NEW: Render featured products on the Homepage
+  if (document.getElementById("checkout-items")) {
+    const currentUser = localStorage.getItem("currentUser");
+
+    if (!currentUser) {
+      alert("You must login first.");
+      localStorage.setItem("redirectAfterLogin", "checkout.html");
+      window.location.href = "login.html";
+      return;
+    }
+
+    renderCheckout();
+  }
+
   if (document.getElementById("featured-products-grid")) {
     renderFeaturedProducts();
   }
@@ -199,10 +211,6 @@ window.onload = function () {
 
   if (document.querySelector(".products-grid") && document.getElementById("product-search")) {
     renderProducts(products);
-  }
-
-  if (document.getElementById("checkout-items")) {
-    renderCheckout();
   }
 };
 
@@ -524,15 +532,34 @@ function goToShop() {
 
 function goToCheckout() {
   const cart = getCart();
+
   if (Object.keys(cart).length === 0) {
     alert("Your cart is empty!");
     return;
   }
+
+  const currentUser = localStorage.getItem("currentUser");
+
+  if (!currentUser) {
+    alert("Please login first to continue your order.");
+    localStorage.setItem("redirectAfterLogin", "checkout.html");
+    window.location.href = "login.html";
+    return;
+  }
+
   window.location.href = "checkout.html";
 }
 
 function placeOrder(event) {
   event.preventDefault();
+
+   const currentUser = localStorage.getItem("currentUser");
+  if (!currentUser) {
+    alert("Please login first to place your order.");
+    localStorage.setItem("redirectAfterLogin", "checkout.html");
+    window.location.href = "login.html";
+    return;
+  }
 
   const name = document.getElementById("customer-name").value.trim();
   const email = document.getElementById("customer-email").value.trim();
@@ -687,22 +714,44 @@ function mockLogin() {
   if (authArea) authArea.style.display = "none";
   if (dashboardArea) dashboardArea.style.display = "block";
 }
+function logoutUser() {
+  localStorage.removeItem("currentUser");
+  location.reload();
+}
 
 function validateLogin() {
   const email = document.getElementById("login-email").value.trim();
   const password = document.getElementById("login-pass").value.trim();
+
   if (!email || !password) {
     alert("Please enter both email and password.");
     return;
   }
+
   if (!isValidEmail(email)) {
     alert("Please enter a valid email address.");
     return;
   }
+
   if (password.length < 6) {
     alert("Password must be at least 6 characters.");
     return;
   }
+
+  const userData = {
+    email: email,
+    name: email.split("@")[0]
+  };
+
+  localStorage.setItem("currentUser", JSON.stringify(userData));
+
+  const redirectPage = localStorage.getItem("redirectAfterLogin");
+  if (redirectPage) {
+    localStorage.removeItem("redirectAfterLogin");
+    window.location.href = redirectPage;
+    return;
+  }
+
   mockLogin();
 }
 
@@ -730,22 +779,33 @@ function joinNow() {
   const email = document.getElementById("reg-email").value.trim();
   const pass = document.getElementById("reg-pass").value;
   const confirm = document.getElementById("reg-confirm").value;
+
   if (!name || !email || !pass || !confirm) {
     alert("Please fill in all fields.");
     return;
   }
+
   if (!isValidEmail(email)) {
     alert("Please enter a valid email address.");
     return;
   }
+
   if (pass.length < 6) {
     alert("Password must be at least 6 characters.");
     return;
   }
+
   if (pass !== confirm) {
     alert("Passwords do not match.");
     return;
   }
+
+  const userData = {
+    name: name,
+    email: email
+  };
+
+  localStorage.setItem("currentUser", JSON.stringify(userData));
 
   const sidebarName = document.getElementById("sidebar-name");
   const sidebarEmail = document.getElementById("sidebar-email");
@@ -759,6 +819,13 @@ function joinNow() {
   const dashboardArea = document.getElementById("dashboard-area");
   if (authArea) authArea.style.display = "none";
   if (dashboardArea) dashboardArea.style.display = "block";
+
+  const redirectPage = localStorage.getItem("redirectAfterLogin");
+  if (redirectPage) {
+    localStorage.removeItem("redirectAfterLogin");
+    window.location.href = redirectPage;
+    return;
+  }
 
   window.scrollTo(0, 0);
   alert("Welcome " + name + "!");
