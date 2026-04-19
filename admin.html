@@ -12,7 +12,6 @@
 <body>
  <header class="website-header">
     <div class="container nav">
-
     <button class="menu-toggle" id="menu-toggle" aria-label="Open menu">☰</button>
 
 <a href="index.html" class="logo">CARTELLO</a>
@@ -20,14 +19,8 @@
 <nav class="navbar" id="navbar">
      <a href="index.html">Home</a>
      <a href="shop.html">Shop</a>
-     <a href="cart.html">Cart</a>
-     <a href="login.html">Login</a>   
+     <a href="#" onclick="adminLogout()">Logout</a>
 </nav>
-<div class="header-tools">
-<a class="cart-link" href="cart.html">🛒 Cart
-    <span class="cart-badge" id="cart-badge">0</span>
-</a>
-</div>
 </div>
 </header>
 <main>
@@ -42,7 +35,6 @@
         <button class="admin-link" onclick="loadTab('reports', this)">📈 Reports</button>
         <button class="admin-link" onclick="loadTab('shipping', this)">🚚 Shipping</button>
         <button class="admin-link" onclick="loadTab('policy', this)">📜 Policies</button>
-        <button class="admin-link" onclick="adminLogout()">🚪 Logout</button>
     </nav>
 </aside>
 
