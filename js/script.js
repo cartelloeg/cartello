@@ -246,7 +246,7 @@ function renderProducts(productsToDisplay) {
         <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
         <div class="product-info">
           <h3 class="product-title">${product.name}</h3>
-          <p class="product-price">$${product.price.toFixed(2)}</p>
+          <p class="product-price">EGP ${product.price.toFixed(2)}</p>
           <button class="add-to-cart-btn" onclick="initQuantity(${product.id}, this)">Add to Cart</button>
           <div class="qty-selector" style="display: none;">
             <button class="qty-btn" onclick="changeQty(${product.id}, -1)">-</button>
@@ -258,6 +258,7 @@ function renderProducts(productsToDisplay) {
     `;
   });
   grid.innerHTML = htmlContent;
+  Object.keys(getCart()).forEach(id => syncProductCardState(id));
 }
 
 function renderFeaturedProducts() {
@@ -275,7 +276,7 @@ function renderFeaturedProducts() {
         <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
         <div class="product-info">
           <h3 class="product-title">${product.name}</h3>
-          <p class="product-price">$${product.price.toFixed(2)}</p>
+          <p class="product-price">EGP ${product.price.toFixed(2)}</p>
           <button class="add-to-cart-btn" onclick="initQuantity(${product.id}, this)">Add to Cart</button>
           <div class="qty-selector" style="display: none;">
             <button class="qty-btn" onclick="changeQty(${product.id}, -1)">-</button>
@@ -323,13 +324,13 @@ function renderCart() {
         <img src="${item.image}" class="cart-img" alt="${item.name}">
         <div class="cart-info">
           <h3>${item.name}</h3>
-          <p>Price: $${item.price.toFixed(2)}</p>
+          <p>Price: EGP ${item.price.toFixed(2)}</p>
           <div class="cart-controls">
             <button onclick="changeCartQty(${id}, -1)">-</button>
             <span>${qty}</span>
             <button onclick="changeCartQty(${id}, 1)">+</button>
           </div>
-          <p>Total: $${itemTotal.toFixed(2)}</p>
+          <p>Total: EGP ${itemTotal.toFixed(2)}</p>
           <button class="remove-btn" onclick="removeItem(${id})">Remove</button>
         </div>
       </div>
@@ -338,12 +339,32 @@ function renderCart() {
 
   cartContainer.innerHTML += `
     <div class="cart-summary">
-      <h2>Total: $${total.toFixed(2)}</h2>
+      <h2>Total: EGP ${total.toFixed(2)}</h2>
       <button class="checkout-btn" onclick="goToCheckout()">
         Continue to Checkout →
       </button>
     </div>
   `;
+}
+function syncProductCardState(productId) {
+  const container = document.getElementById("qty-container-" + productId);
+  if (!container) return;
+
+  const cart = getCart();
+  const qty = cart[productId] || 0;
+
+  const addButton = container.querySelector(".add-to-cart-btn");
+  const selector = container.querySelector(".qty-selector");
+  const qtyDisplay = container.querySelector(".qty-number");
+
+  if (qty > 0) {
+    if (addButton) addButton.style.display = "none";
+    if (selector) selector.style.display = "flex";
+    if (qtyDisplay) qtyDisplay.textContent = qty;
+  } else {
+    if (addButton) addButton.style.display = "block";
+    if (selector) selector.style.display = "none";
+  }
 }
 
 function renderCheckout() {
@@ -376,7 +397,7 @@ function renderCheckout() {
     html += `
       <div class="checkout-item">
         <span>${item.name} (x${qty})</span>
-        <span>$${itemTotal.toFixed(2)}</span>
+        <span>EGP ${itemTotal.toFixed(2)}</span>
       </div>
     `;
   }
@@ -387,10 +408,10 @@ function renderCheckout() {
   const finalTotal = subtotal + shipping;
 
   if (shippingContainer) {
-    shippingContainer.innerHTML = `<h3>Shipping: $${shipping.toFixed(2)}</h3>`;
+    shippingContainer.innerHTML = `<h3>Shipping: EGP ${shipping.toFixed(2)}</h3>`;
   }
 
-  totalContainer.innerHTML = `<h3>Total: $${finalTotal.toFixed(2)}</h3>`;
+  totalContainer.innerHTML = `<h3>Total: EGP ${finalTotal.toFixed(2)}</h3>`;
 }
 
 // ==========================================================================
@@ -664,11 +685,8 @@ function updateShipping() {
   const shipping = getShippingPrice();
   const finalTotal = subtotal + shipping;
 
-  shippingContainer.innerHTML = shipping > 0
-    ? `<h3>Shipping: $${shipping.toFixed(2)}</h3>`
-    : `<h3>Shipping: $0.00</h3>`;
-
-  totalContainer.innerHTML = `<h3>Total: $${finalTotal.toFixed(2)}</h3>`;
+shippingContainer.innerHTML = `<h3>Shipping: EGP ${shipping.toFixed(2)}</h3>`;
+totalContainer.innerHTML = `<h3>Total: EGP ${finalTotal.toFixed(2)}</h3>`;
 }
 
 function cancelUI(btn) {
@@ -907,7 +925,7 @@ function loadTab(tabName) {
     dashboard: `
       <h1>📊 Dashboard</h1>
       <div class="products-grid" style="margin-top:20px">
-        <div class="card" style="padding:20px; border:1px solid #eee"><h3>Sales</h3><p>$12,450</p></div>
+        <div class="card" style="padding:20px; border:1px solid #eee"><h3>Sales</h3><p>EGP 12,450</p></div>
         <div class="card" style="padding:20px; border:1px solid #eee"><h3>Orders</h3><p>156</p></div>
         <div class="card" style="padding:20px; border:1px solid #eee"><h3>Customers</h3><p>1,024</p></div>
       </div>
@@ -919,8 +937,8 @@ function loadTab(tabName) {
       </div>
       <table class="admin-table">
         <tr><th>ID</th><th>Name</th><th>Price</th><th>Stock</th><th>Action</th></tr>
-        <tr><td>#1</td><td>Premium Watch</td><td>$199</td><td>12</td><td><button>Edit</button></td></tr>
-        <tr><td>#2</td><td>Leather Bag</td><td>$85</td><td>5</td><td><button>Edit</button></td></tr>
+        <tr><td>#1</td><td>Premium Watch</td><td>EGP 199</td><td>12</td><td><button>Edit</button></td></tr>
+        <tr><td>#2</td><td>Leather Bag</td><td>EGP 85</td><td>5</td><td><button>Edit</button></td></tr>
       </table>
     `,
     categories: `
@@ -935,8 +953,8 @@ function loadTab(tabName) {
       <h1>🛒 Order Management</h1>
       <table class="admin-table">
         <tr><th>Order ID</th><th>Customer</th><th>Total</th><th>Status</th></tr>
-        <tr><td>#1001</td><td>Ziad Ahmed</td><td>$284.00</td><td><span class="status-badge status-shipped">Shipped</span></td></tr>
-        <tr><td>#1002</td><td>John Doe</td><td>$120.00</td><td><span class="status-badge status-pending">Pending</span></td></tr>
+        <tr><td>#1001</td><td>Ziad Ahmed</td><td>EGP 284.00</td><td><span class="status-badge status-shipped">Shipped</span></td></tr>
+        <tr><td>#1002</td><td>John Doe</td><td>EGP 120.00</td><td><span class="status-badge status-pending">Pending</span></td></tr>
       </table>
     `,
     users: `
@@ -956,7 +974,7 @@ function loadTab(tabName) {
     shipping: `
       <h1>🚚 Shipping Settings</h1>
       <div style="max-width:400px; margin-top:20px">
-        <label>Default Shipping Fee ($):</label><br>
+        <label>Default Shipping Fee (EGP):</label><br>
         <input type="number" class="search-input" value="10.00" style="width:100%; margin:10px 0;">
         <button class="search-button">Save Configuration</button>
       </div>
