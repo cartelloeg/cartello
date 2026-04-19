@@ -16,7 +16,7 @@ const products = [
     description: "A luxury timepiece featuring a genuine leather strap and scratch-resistant sapphire crystal.", stock: 12, rating: 4.8, reviews: 124 
   },
   { 
-    id: 2, name: "Leather Bag", price: 85.0, image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=400&q=80", category: "Accessories",
+    id: 2, name: "Leather Bag", price: 100.0, image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=400&q=80", category: "Accessories",
     description: "Handcrafted full-grain leather messenger bag, perfect for everyday carry or a 15-inch laptop.", stock: 0, rating: 4.2, reviews: 89 
   },
   { 
