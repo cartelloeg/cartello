@@ -8,6 +8,7 @@ let cartData = JSON.parse(localStorage.getItem("cart")) || {};
 let currentCategory = "All";
 let currentPage = 1;
 const itemsPerPage = 8;
+let currentList = []; // This will track our active list (searched/filtered products)
 
 const products = [
   { id: 1, name: "Premium Watch", price: 199.0, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&q=80", category: "Accessories" },
