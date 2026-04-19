@@ -3,194 +3,49 @@
 // ==========================================================================
 
 let cartData = JSON.parse(localStorage.getItem("cart")) || {};
+
+// Pagination & Filter State
 let currentCategory = "All";
+let currentPage = 1;
+const itemsPerPage = 8;
 
 const products = [
-  {
-    id: 1,
-    name: "Premium Watch",
-    price: 199.0,
-    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&q=80",
-    category: "Accessories"
-  },
-  {
-    id: 2,
-    name: "Leather Bag",
-    price: 85.0,
-    image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=400&q=80",
-    category: "Accessories"
-  },
-  {
-    id: 3,
-    name: "Wireless Headphones",
-    price: 150.0,
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=400&q=80",
-    category: "Electronics"
-  },
-  {
-    id: 4,
-    name: "Smart Speaker",
-    price: 120.0,
-    image: "https://images.unsplash.com/photo-1586078875290-c22eb791ad5d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ,
-    category: "Electronics"
-  },
-  {
-    id: 5,
-    name: "Running Shoes",
-    price: 110.0,
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&q=80", 
-    category: "Accessories"
-  },
- {
-    id: 6,
-    name: "Wireless Mouse",
-    price: 45.0,
-    image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=400&q=80",
-    category: "Electronics"
-  },
-  {
-    id: 7,
-    name: "Mechanical Keyboard",
-    price: 135.0,
-    image: "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=400&q=80",
-    category: "Electronics"
-  },
-  {
-    id: 8,
-    name: "Polarized Sunglasses",
-    price: 65.0,
-    image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=400&q=80",
-    category: "Accessories"
-  },
-  {
-    id: 9,
-    name: "Classic Canvas Backpack",
-    price: 55.0,
-    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&q=80",
-    category: "Accessories"
-  },
-  {
-    id: 10,
-    name: "Fitness Tracker Band",
-    price: 90.0,
-    image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?auto=format&fit=crop&w=400&q=80",
-    category: "Electronics"
-  },
-  {
-    id: 11,
-    name: "Minimalist Wallet",
-    price: 35.0,
-    image: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=400&q=80",
-    category: "Accessories"
-  },
-  {
-    id: 12,
-    name: "Noise-Canceling Earbuds",
-    price: 180.0,
-    image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=400&q=80",
-    category: "Electronics"
-  },
-  {
-    id: 13,
-    name: "Modern Desk Lamp",
-    price: 40.0,
-    image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=400&q=80",
-    category: "Electronics"
-  },
-  {
-    id: 14,
-    name: "Insulated Coffee Thermos",
-    price: 28.0,
-    image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=400&q=80",
-    category: "Accessories"
-  },
-  {
-    id: 15,
-    name: "Portable Power Bank",
-    price: 50.0,
-    image: "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=400&q=80",
-    category: "Electronics"
-  },
-
-  {
-    id: 16,
-    name: "Hydrating Face Cleanser",
-    price: 24.0,
-    image: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=400&q=80",
-    category: "Skin Care"
-  },
-  {
-    id: 17,
-    name: "Vitamin C Serum",
-    price: 35.0,
-    image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80",
-    category: "Skin Care"
-  },
-  {
-    id: 18,
-    name: "Daily SPF 50 Sunscreen",
-    price: 28.0,
-    image: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=400&q=80",
-    category: "Skin Care"
-  },
-  {
-    id: 19,
-    name: "Purifying Clay Mask",
-    price: 22.0,
-    image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=400&q=80",
-    category: "Skin Care"
-  },
-  {
-    id: 20,
-    name: "Night Repair Cream",
-    price: 45.0,
-    image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=400&q=80",
-    category: "Skin Care"
-  },
-
- 
-  {
-    id: 21,
-    name: "Extra Virgin Olive Oil",
-    price: 18.0,
-    image: "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=400&q=80",
-    category: "Grocery"
-  },
-  {
-    id: 22,
-    name: "Artisan Coffee Beans",
-    price: 20.0,
-    image: "https://images.unsplash.com/photo-1559525839-b184a4d698c7?auto=format&fit=crop&w=400&q=80",
-    category: "Grocery"
-  },
-  {
-    id: 23,
-    name: "Whole Wheat Pasta",
-    price: 5.0,
-    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=400&q=80",
-    category: "Grocery"
-  },
-  {
-    id: 24,
-    name: "Fresh Green Apples",
-    price: 8.0,
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&q=80",
-    category: "Grocery"
-  }
+  { id: 1, name: "Premium Watch", price: 199.0, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&q=80", category: "Accessories" },
+  { id: 2, name: "Leather Bag", price: 85.0, image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=400&q=80", category: "Accessories" },
+  { id: 3, name: "Wireless Headphones", price: 150.0, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=400&q=80", category: "Electronics" },
+  { id: 4, name: "Smart Speaker", price: 120.0, image: "https://images.unsplash.com/photo-1586078875290-c22eb791ad5d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" , category: "Electronics" },
+  { id: 5, name: "Running Shoes", price: 110.0, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&q=80", category: "Accessories" },
+  { id: 6, name: "Wireless Mouse", price: 45.0, image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=400&q=80", category: "Electronics" },
+  { id: 7, name: "Mechanical Keyboard", price: 135.0, image: "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=400&q=80", category: "Electronics" },
+  { id: 8, name: "Polarized Sunglasses", price: 65.0, image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=400&q=80", category: "Accessories" },
+  { id: 9, name: "Classic Canvas Backpack", price: 55.0, image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=400&q=80", category: "Accessories" },
+  { id: 10, name: "Fitness Tracker Band", price: 90.0, image: "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?auto=format&fit=crop&w=400&q=80", category: "Electronics" },
+  { id: 11, name: "Minimalist Wallet", price: 35.0, image: "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=400&q=80", category: "Accessories" },
+  { id: 12, name: "Noise-Canceling Earbuds", price: 180.0, image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=400&q=80", category: "Electronics" },
+  { id: 13, name: "Modern Desk Lamp", price: 40.0, image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=400&q=80", category: "Electronics" },
+  { id: 14, name: "Insulated Coffee Thermos", price: 28.0, image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=400&q=80", category: "Accessories" },
+  { id: 15, name: "Portable Power Bank", price: 50.0, image: "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=400&q=80", category: "Electronics" },
+  { id: 16, name: "Hydrating Face Cleanser", price: 24.0, image: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=400&q=80", category: "Skin Care" },
+  { id: 17, name: "Vitamin C Serum", price: 35.0, image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80", category: "Skin Care" },
+  { id: 18, name: "Daily SPF 50 Sunscreen", price: 28.0, image: "https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=400&q=80", category: "Skin Care" },
+  { id: 19, name: "Purifying Clay Mask", price: 22.0, image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=400&q=80", category: "Skin Care" },
+  { id: 20, name: "Night Repair Cream", price: 45.0, image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=400&q=80", category: "Skin Care" },
+  { id: 21, name: "Extra Virgin Olive Oil", price: 18.0, image: "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=400&q=80", category: "Grocery" },
+  { id: 22, name: "Artisan Coffee Beans", price: 20.0, image: "https://images.unsplash.com/photo-1559525839-b184a4d698c7?auto=format&fit=crop&w=400&q=80", category: "Grocery" },
+  { id: 23, name: "Whole Wheat Pasta", price: 5.0, image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=400&q=80", category: "Grocery" },
+  { id: 24, name: "Fresh Green Apples", price: 8.0, image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&q=80", category: "Grocery" }
 ];
-
 
 // ==========================================================================
 // 2. INITIALIZATION & GLOBAL UTILITIES
 // ==========================================================================
 
 window.onload = function () {
-   updateCartBadge();
+  updateCartBadge();
   initMobileMenu();
 
   if (document.getElementById("admin-panel-content")) {
     const isAdmin = localStorage.getItem("adminSession");
-
     if (isAdmin !== "true") {
       alert("You must login as admin first.");
       window.location.href = "login.html";
@@ -206,8 +61,10 @@ window.onload = function () {
     renderCart();
   }
 
-  if (document.querySelector(".products-grid") && document.getElementById("product-search")) {
-    renderProducts(products);
+  // UPDATED: Now uses the paginated loading system instead of drawing everything
+  if (document.getElementById("product-container")) {
+    currentList = products; // Initialize the list to show all products
+    updatePage();
   }
 
   if (document.getElementById("checkout-items")) {
@@ -233,11 +90,11 @@ function initMobileMenu() {
 }
 
 // ==========================================================================
-// 3. CORE RENDERING FUNCTIONS (Building HTML)
+// 3. PAGINATION & CORE RENDERING 
 // ==========================================================================
 
 function renderProducts(productsToDisplay) {
-  const grid = document.querySelector(".products-grid");
+  const grid = document.getElementById("product-container");
   if (!grid) return;
 
   let htmlContent = "";
@@ -262,16 +119,96 @@ function renderProducts(productsToDisplay) {
   Object.keys(getCart()).forEach(id => syncProductCardState(id));
 }
 
+function updatePage() {
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  // Slice the dynamically filtered list
+  const itemsToShow = currentList.slice(startIndex, endIndex);
+
+  renderProducts(itemsToShow);
+
+  const totalPages = Math.ceil(currentList.length / itemsPerPage);
+  const pageInfo = document.getElementById("page-info");
+  const prevBtn = document.getElementById("prev-btn");
+  const nextBtn = document.getElementById("next-btn");
+  const noResults = document.getElementById("no-results");
+
+  // Handle empty search results
+ // Handle empty search results
+  if (currentList.length === 0) {
+      if (noResults) noResults.style.display = "block";
+      if (pageInfo) pageInfo.textContent = "Page 0 of 0";
+      if (prevBtn) prevBtn.style.display = "none";
+      if (nextBtn) nextBtn.style.display = "none";
+  } else {
+      if (noResults) noResults.style.display = "none";
+      if (pageInfo) pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+      
+      // HIDE Previous button if on page 1, otherwise SHOW it
+      if (prevBtn) {
+          prevBtn.style.display = (currentPage === 1) ? "none" : "block";
+      }
+      
+      // HIDE Next button if on the last page, otherwise SHOW it
+      if (nextBtn) {
+          nextBtn.style.display = (currentPage === totalPages) ? "none" : "block";
+      }
+  }
+}
+
+function prevPage() {
+  if (currentPage > 1) {
+      currentPage--;
+      updatePage(); 
+  }
+}
+
+function nextPage() {
+  const totalPages = Math.ceil(currentList.length / itemsPerPage);
+  if (currentPage < totalPages) {
+      currentPage++;
+      updatePage(); 
+  }
+}
+
+// ==========================================================================
+// 4. PRODUCT FILTERING & SEARCH
+// ==========================================================================
+
+function setCategory(categoryName) {
+  currentCategory = categoryName;
+  filterProducts();
+}
+
+function filterProducts() {
+  const searchInput = document.getElementById("product-search");
+  const input = searchInput ? searchInput.value.toLowerCase() : "";
+
+  // Filter based on BOTH search input and selected category
+  currentList = products.filter(product => {
+    const matchesSearch = product.name.toLowerCase().includes(input);
+    const matchesCategory = currentCategory === "All" || product.category === currentCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  // Reset to the first page of the new results
+  currentPage = 1;
+  updatePage();
+}
+
+// ==========================================================================
+// 5. FEATURED, CART LOGIC & OPERATIONS
+// ==========================================================================
+
 function renderFeaturedProducts() {
   const grid = document.getElementById("featured-products-grid");
   if (!grid) return;
 
   let htmlContent = "";
-  // Grab only the first 4 products from the array
   const featured = products.slice(0, 4);
 
   featured.forEach(product => {
-    // This HTML matches Wael's cart setup perfectly
     htmlContent += `
       <div class="product-card" id="qty-container-${product.id}">
         <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
@@ -288,10 +225,8 @@ function renderFeaturedProducts() {
       </div>
     `;
   });
-  
   grid.innerHTML = htmlContent;
 }
-
 
 function renderCart() {
   const cartContainer = document.getElementById("cart-items");
@@ -347,6 +282,7 @@ function renderCart() {
     </div>
   `;
 }
+
 function syncProductCardState(productId) {
   const container = document.getElementById("qty-container-" + productId);
   if (!container) return;
@@ -367,83 +303,6 @@ function syncProductCardState(productId) {
     if (selector) selector.style.display = "none";
   }
 }
-
-function renderCheckout() {
-  const itemsContainer = document.getElementById("checkout-items");
-  const totalContainer = document.getElementById("checkout-total");
-  const shippingContainer = document.getElementById("checkout-shipping");
-
-  if (!itemsContainer || !totalContainer) return;
-
-  const cart = getCart();
-
-  if (Object.keys(cart).length === 0) {
-    itemsContainer.innerHTML = "<p>Your cart is empty</p>";
-    if (shippingContainer) shippingContainer.innerHTML = "";
-    totalContainer.innerHTML = "";
-    return;
-  }
-
-  let subtotal = 0;
-  let html = "";
-
-  for (let id in cart) {
-    const item = products.find(p => p.id == id);
-    if (!item) continue;
-
-    const qty = cart[id];
-    const itemTotal = item.price * qty;
-    subtotal += itemTotal;
-
-    html += `
-      <div class="checkout-item">
-        <span>${item.name} (x${qty})</span>
-        <span>EGP ${itemTotal.toFixed(2)}</span>
-      </div>
-    `;
-  }
-
-  itemsContainer.innerHTML = html;
-
-  const shipping = getShippingPrice();
-  const finalTotal = subtotal + shipping;
-
-  if (shippingContainer) {
-    shippingContainer.innerHTML = `<h3>Shipping: EGP ${shipping.toFixed(2)}</h3>`;
-  }
-
-  totalContainer.innerHTML = `<h3>Total: EGP ${finalTotal.toFixed(2)}</h3>`;
-}
-
-// ==========================================================================
-// 4. PRODUCT FILTERING & SEARCH
-// ==========================================================================
-
-function setCategory(categoryName) {
-  currentCategory = categoryName;
-  filterProducts();
-}
-
-function filterProducts() {
-  const searchInput = document.getElementById("product-search");
-  const input = searchInput ? searchInput.value.toLowerCase() : "";
-
-  const filtered = products.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(input);
-    const matchesCategory = currentCategory === "All" || product.category === currentCategory;
-    return matchesSearch && matchesCategory;
-  });
-  renderProducts(filtered);
-
-  const message = document.getElementById("no-results");
-  if (message) {
-    message.style.display = filtered.length === 0 ? "block" : "none";
-  }
-}
-
-// ==========================================================================
-// 5. CART LOGIC & OPERATIONS
-// ==========================================================================
 
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cartData));
@@ -552,6 +411,53 @@ function goToShop() {
   window.location.href = "shop.html";
 }
 
+function renderCheckout() {
+  const itemsContainer = document.getElementById("checkout-items");
+  const totalContainer = document.getElementById("checkout-total");
+  const shippingContainer = document.getElementById("checkout-shipping");
+
+  if (!itemsContainer || !totalContainer) return;
+
+  const cart = getCart();
+
+  if (Object.keys(cart).length === 0) {
+    itemsContainer.innerHTML = "<p>Your cart is empty</p>";
+    if (shippingContainer) shippingContainer.innerHTML = "";
+    totalContainer.innerHTML = "";
+    return;
+  }
+
+  let subtotal = 0;
+  let html = "";
+
+  for (let id in cart) {
+    const item = products.find(p => p.id == id);
+    if (!item) continue;
+
+    const qty = cart[id];
+    const itemTotal = item.price * qty;
+    subtotal += itemTotal;
+
+    html += `
+      <div class="checkout-item">
+        <span>${item.name} (x${qty})</span>
+        <span>EGP ${itemTotal.toFixed(2)}</span>
+      </div>
+    `;
+  }
+
+  itemsContainer.innerHTML = html;
+
+  const shipping = getShippingPrice();
+  const finalTotal = subtotal + shipping;
+
+  if (shippingContainer) {
+    shippingContainer.innerHTML = `<h3>Shipping: EGP ${shipping.toFixed(2)}</h3>`;
+  }
+
+  totalContainer.innerHTML = `<h3>Total: EGP ${finalTotal.toFixed(2)}</h3>`;
+}
+
 function goToCheckout() {
   const cart = getCart();
 
@@ -575,7 +481,7 @@ function goToCheckout() {
 function placeOrder(event) {
   event.preventDefault();
 
-   const currentUser = localStorage.getItem("currentUser");
+  const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
     alert("Please login first to place your order.");
     localStorage.setItem("redirectAfterLogin", "checkout.html");
@@ -627,39 +533,15 @@ function placeOrder(event) {
     return;
   }
 
-  const shipping = getShippingPrice();
-
   showOrderModal();
 }
 
- const shippingRates = {
-  Cairo: 50,
-  Giza: 50,
-  Alexandria: 70,
-  Dakahlia: 80,
-  Sharqia: 80,
-  Monufia: 75,
-  Qalyubia: 60,
-  Beheira: 85,
-  "Kafr El Sheikh": 85,
-  Gharbia: 80,
-  "Port Said": 90,
-  Suez: 90,
-  Ismailia: 85,
-  Damietta: 85,
-  Fayoum: 75,
-  "Beni Suef": 80,
-  Minya: 90,
-  Assiut: 100,
-  Sohag: 110,
-  Qena: 120,
-  Luxor: 130,
-  Aswan: 140,
-  "Red Sea": 120,
-  "New Valley": 150,
-  Matrouh: 120,
-  "North Sinai": 130,
-  "South Sinai": 140
+const shippingRates = {
+  Cairo: 50, Giza: 50, Alexandria: 70, Dakahlia: 80, Sharqia: 80, Monufia: 75,
+  Qalyubia: 60, Beheira: 85, "Kafr El Sheikh": 85, Gharbia: 80, "Port Said": 90,
+  Suez: 90, Ismailia: 85, Damietta: 85, Fayoum: 75, "Beni Suef": 80, Minya: 90,
+  Assiut: 100, Sohag: 110, Qena: 120, Luxor: 130, Aswan: 140, "Red Sea": 120,
+  "New Valley": 150, Matrouh: 120, "North Sinai": 130, "South Sinai": 140
 };
 
 function getShippingPrice() {
@@ -686,8 +568,8 @@ function updateShipping() {
   const shipping = getShippingPrice();
   const finalTotal = subtotal + shipping;
 
-shippingContainer.innerHTML = `<h3>Shipping: EGP ${shipping.toFixed(2)}</h3>`;
-totalContainer.innerHTML = `<h3>Total: EGP ${finalTotal.toFixed(2)}</h3>`;
+  shippingContainer.innerHTML = `<h3>Shipping: EGP ${shipping.toFixed(2)}</h3>`;
+  totalContainer.innerHTML = `<h3>Total: EGP ${finalTotal.toFixed(2)}</h3>`;
 }
 
 function cancelUI(btn) {
@@ -700,6 +582,7 @@ function cancelUI(btn) {
     btn.remove();
   }
 }
+
 function showOrderModal() {
   const modal = document.getElementById("order-success-modal");
   if (modal) {
@@ -733,6 +616,7 @@ function mockLogin() {
   if (authArea) authArea.style.display = "none";
   if (dashboardArea) dashboardArea.style.display = "block";
 }
+
 function logoutUser() {
   localStorage.removeItem("currentUser");
   location.reload();
@@ -912,11 +796,11 @@ function adminLogin() {
     alert("Invalid admin credentials. Please try again.");
   }
 }
+
 function adminLogout() {
   localStorage.removeItem("adminSession");
   window.location.href = "login.html";
 }
-
 
 function loadTab(tabName, btn) {
   const contentArea = document.getElementById("admin-panel-content");

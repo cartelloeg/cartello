@@ -65,7 +65,13 @@
         
       </div>
      
-      <div class="products-grid"></div> 
+<div class="products-grid" id="product-container"></div>
+
+<div id="pagination-controls" style="text-align: center; margin-top: 20px; display: flex; justify-content: center; gap: 15px;">
+    <button id="prev-btn" class="search-button" onclick="prevPage()">Previous</button>
+    <span id="page-info" style="font-weight: bold; align-self: center;"></span>
+    <button id="next-btn" class="search-button" onclick="nextPage()">Next</button>
+</div>
     </section>
       
 </main>
