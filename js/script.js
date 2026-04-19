@@ -379,17 +379,38 @@ function renderFeaturedProducts() {
   if (!grid) return;
 
   let htmlContent = "";
+  // Grab only the first 4 products from the array
   const featured = products.slice(0, 4);
 
   featured.forEach(product => {
+    
+    // 1. The new button stock logic!
+    let buttonHtml = "";
+    if (product.stock > 0) {
+        buttonHtml = `<button class="add-to-cart-btn search-button" onclick="initQuantity(${product.id}, this)">Add to Cart</button>`;
+    } else {
+        buttonHtml = `<button class="add-to-cart-btn" style="background-color: #e0e0e0; color: #888; cursor: not-allowed; border: none;" disabled>Out of Stock</button>`;
+    }
+
+    // 2. The upgraded HTML template with Modal links
     htmlContent += `
       <div class="product-card" id="qty-container-${product.id}">
-        <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
+      
+        <a href="javascript:void(0);" onclick="openModal(${product.id})">
+            <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
+        </a>
+        
         <div class="product-info">
-          <h3 class="product-title">${product.name}</h3>
+          
+          <a href="javascript:void(0);" onclick="openModal(${product.id})" style="text-decoration: none; color: inherit;">
+            <h3 class="product-title">${product.name}</h3>
+          </a>
+          
           <p class="product-price">EGP ${product.price.toFixed(2)}</p>
-          <button class="add-to-cart-btn" onclick="initQuantity(${product.id}, this)">Add to Cart</button>
-          <div class="qty-selector" style="display: none;">
+          
+          ${buttonHtml}
+
+          <div class="qty-selector" style="display: none; justify-content: space-between; align-items: center;">
             <button class="qty-btn" onclick="changeQty(${product.id}, -1)">-</button>
             <span class="qty-number">1</span>
             <button class="qty-btn" onclick="changeQty(${product.id}, 1)">+</button>
@@ -398,7 +419,13 @@ function renderFeaturedProducts() {
       </div>
     `;
   });
+  
   grid.innerHTML = htmlContent;
+
+  // 3. Keep the buttons synced with the cart on the homepage!
+  if (typeof getCart === 'function' && typeof syncProductCardState === 'function') {
+      Object.keys(getCart()).forEach(id => syncProductCardState(id));
+  }
 }
 
 function renderCart() {
