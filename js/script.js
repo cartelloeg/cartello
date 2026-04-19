@@ -173,6 +173,7 @@ function renderProducts(productsToDisplay) {
   let htmlContent = "";
   productsToDisplay.forEach(product => {
     
+    // Your clean button logic!
     let buttonHtml = "";
     if (product.stock > 0) {
         buttonHtml = `<button class="add-to-cart-btn" onclick="initQuantity(${product.id}, this)">Add to Cart</button>`;
@@ -182,9 +183,17 @@ function renderProducts(productsToDisplay) {
 
     htmlContent += `
       <div class="product-card" id="qty-container-${product.id}">
-        <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
+      
+        <a href="javascript:void(0);" onclick="openModal(${product.id})">
+            <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
+        </a>
+        
         <div class="product-info">
-          <h3 class="product-title">${product.name}</h3>
+        
+          <a href="javascript:void(0);" onclick="openModal(${product.id})" style="text-decoration: none; color: inherit;">
+            <h3 class="product-title">${product.name}</h3>
+          </a>
+          
           <p class="product-price">EGP ${product.price.toFixed(2)}</p>
           
           ${buttonHtml}
@@ -204,6 +213,7 @@ function renderProducts(productsToDisplay) {
       Object.keys(getCart()).forEach(id => syncProductCardState(id));
   }
 }
+
 function updatePage() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -240,6 +250,84 @@ function updatePage() {
           nextBtn.style.display = (currentPage === totalPages) ? "none" : "block";
       }
   }
+}
+
+// ==========================================
+// MODAL POP-UP LOGIC
+// ==========================================
+
+function openModal(productId) {
+    const modal = document.getElementById("product-modal");
+    const container = document.getElementById("modal-details-container");
+    if (!modal || !container) return;
+
+    // Find the product
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
+    // Generate stars
+    const starCount = Math.round(product.rating);
+    const stars = "★".repeat(starCount) + "☆".repeat(5 - starCount);
+
+    // Build the inside of the pop-up
+    container.innerHTML = `
+        <div class="pdp-container" id="qty-container-${product.id}" style="box-shadow: none; margin: 0; padding: 0;">
+            <div class="pdp-image-col">
+                <img src="${product.image}" alt="${product.name}">
+            </div>
+            
+            <div class="pdp-info-col">
+                <span class="pdp-category">${product.category}</span>
+                <h2 class="pdp-title">${product.name}</h2>
+                <div class="pdp-rating">${stars} ${product.rating} <span style="color:#888; font-weight:normal;">(${product.reviews} reviews)</span></div>
+                <div class="pdp-price">EGP ${product.price.toFixed(2)}</div>
+                
+                <p class="pdp-desc">${product.description}</p>
+                
+                <div class="pdp-stock ${product.stock > 0 ? 'in-stock' : 'out-of-stock'}">
+                    ${product.stock > 0 ? `In Stock (${product.stock} available)` : `Currently Out of Stock`}
+                </div>
+
+                <div class="pdp-action-area">
+                    ${product.stock > 0 
+                        ? `<button class="search-button pdp-add-btn add-to-cart-btn" onclick="initQuantity(${product.id}, this)">Add to Cart</button>`
+                        : `<button class="pdp-out-of-stock-btn add-to-cart-btn" disabled>Out of Stock</button>`
+                    }
+
+                    <div class="qty-selector pdp-qty-wrapper" style="display: none;">
+                        <button class="pdp-qty-btn qty-btn" onclick="changeQty(${product.id}, -1)">-</button>
+                        <span class="pdp-qty-number qty-number">1</span>
+                        <button class="pdp-qty-btn qty-btn" onclick="changeQty(${product.id}, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Make the pop-up visible
+    modal.classList.add("active");
+
+    // Check if it's already in the cart so buttons are correct
+    if (typeof syncProductCardState === 'function') {
+        syncProductCardState(product.id);
+    }
+}
+
+function closeModal() {
+    const modal = document.getElementById("product-modal");
+    if (modal) {
+        modal.classList.remove("active");
+        // Clear the HTML inside so it's fresh for the next click
+        document.getElementById("modal-details-container").innerHTML = ""; 
+    }
+}
+
+// Optional Bonus: Close the modal if they click the dark background outside the white box!
+window.onclick = function(event) {
+    const modal = document.getElementById("product-modal");
+    if (event.target === modal) {
+        closeModal();
+    }
 }
 
 function prevPage() {
