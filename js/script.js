@@ -4,12 +4,10 @@
 
 let cartData = JSON.parse(localStorage.getItem("cart")) || {};
 
-// Pagination & Filter State
 let currentCategory = "All";
 let currentPage = 1;
 const itemsPerPage = 8;
-let currentList = []; // This will track our active list (searched/filtered products)
-
+let currentList = [];
 const products = [
   { 
     id: 1, name: "Premium Watch", price: 199.0, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&q=80", category: "Accessories",
@@ -134,9 +132,8 @@ window.onload = function () {
     renderCart();
   }
 
-  // UPDATED: Now uses the paginated loading system instead of drawing everything
   if (document.getElementById("product-container")) {
-    currentList = products; // Initialize the list to show all products
+    currentList = products; 
     updatePage();
   }
 
@@ -173,7 +170,6 @@ function renderProducts(productsToDisplay) {
   let htmlContent = "";
   productsToDisplay.forEach(product => {
     
-    // Your clean button logic!
     let buttonHtml = "";
     if (product.stock > 0) {
         buttonHtml = `<button class="add-to-cart-btn" onclick="initQuantity(${product.id}, this)">Add to Cart</button>`;
@@ -218,7 +214,6 @@ function updatePage() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  // Slice the dynamically filtered list
   const itemsToShow = currentList.slice(startIndex, endIndex);
 
   renderProducts(itemsToShow);
@@ -229,8 +224,6 @@ function updatePage() {
   const nextBtn = document.getElementById("next-btn");
   const noResults = document.getElementById("no-results");
 
-  // Handle empty search results
- // Handle empty search results
   if (currentList.length === 0) {
       if (noResults) noResults.style.display = "block";
       if (pageInfo) pageInfo.textContent = "Page 0 of 0";
@@ -240,12 +233,10 @@ function updatePage() {
       if (noResults) noResults.style.display = "none";
       if (pageInfo) pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
       
-      // HIDE Previous button if on page 1, otherwise SHOW it
       if (prevBtn) {
           prevBtn.style.display = (currentPage === 1) ? "none" : "block";
       }
       
-      // HIDE Next button if on the last page, otherwise SHOW it
       if (nextBtn) {
           nextBtn.style.display = (currentPage === totalPages) ? "none" : "block";
       }
@@ -261,15 +252,12 @@ function openModal(productId) {
     const container = document.getElementById("modal-details-container");
     if (!modal || !container) return;
 
-    // Find the product
     const product = products.find(p => p.id === productId);
     if (!product) return;
 
-    // Generate stars
     const starCount = Math.round(product.rating);
     const stars = "★".repeat(starCount) + "☆".repeat(5 - starCount);
 
-    // Build the inside of the pop-up
     container.innerHTML = `
         <div class="pdp-container" id="qty-container-${product.id}" style="box-shadow: none; margin: 0; padding: 0;">
             <div class="pdp-image-col">
@@ -304,10 +292,8 @@ function openModal(productId) {
         </div>
     `;
 
-    // Make the pop-up visible
     modal.classList.add("active");
 
-    // Check if it's already in the cart so buttons are correct
     if (typeof syncProductCardState === 'function') {
         syncProductCardState(product.id);
     }
@@ -317,12 +303,10 @@ function closeModal() {
     const modal = document.getElementById("product-modal");
     if (modal) {
         modal.classList.remove("active");
-        // Clear the HTML inside so it's fresh for the next click
         document.getElementById("modal-details-container").innerHTML = ""; 
     }
 }
 
-// Optional Bonus: Close the modal if they click the dark background outside the white box!
 window.onclick = function(event) {
     const modal = document.getElementById("product-modal");
     if (event.target === modal) {
@@ -358,14 +342,12 @@ function filterProducts() {
   const searchInput = document.getElementById("product-search");
   const input = searchInput ? searchInput.value.toLowerCase() : "";
 
-  // Filter based on BOTH search input and selected category
   currentList = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(input);
     const matchesCategory = currentCategory === "All" || product.category === currentCategory;
     return matchesSearch && matchesCategory;
   });
 
-  // Reset to the first page of the new results
   currentPage = 1;
   updatePage();
 }
@@ -379,12 +361,10 @@ function renderFeaturedProducts() {
   if (!grid) return;
 
   let htmlContent = "";
-  // Grab only the first 4 products from the array
   const featured = products.slice(0, 4);
 
   featured.forEach(product => {
     
-    // 1. The new button stock logic!
     let buttonHtml = "";
     if (product.stock > 0) {
         buttonHtml = `<button class="add-to-cart-btn search-button" onclick="initQuantity(${product.id}, this)">Add to Cart</button>`;
@@ -392,7 +372,6 @@ function renderFeaturedProducts() {
         buttonHtml = `<button class="add-to-cart-btn" style="background-color: #e0e0e0; color: #888; cursor: not-allowed; border: none;" disabled>Out of Stock</button>`;
     }
 
-    // 2. The upgraded HTML template with Modal links
     htmlContent += `
       <div class="product-card" id="qty-container-${product.id}">
       
@@ -422,7 +401,6 @@ function renderFeaturedProducts() {
   
   grid.innerHTML = htmlContent;
 
-  // 3. Keep the buttons synced with the cart on the homepage!
   if (typeof getCart === 'function' && typeof syncProductCardState === 'function') {
       Object.keys(getCart()).forEach(id => syncProductCardState(id));
   }
@@ -513,13 +491,11 @@ function getCart() {
 }
 
 function initQuantity(productId, btn) {
-  // --- NEW ZERO STOCK CHECK ---
   const product = products.find(p => p.id === productId);
   if (product && product.stock <= 0) {
       alert("Sorry, this item is currently out of stock.");
-      return; // Stop them from starting a cart
+      return; 
   }
-  // ----------------------------
 
   const container = btn.parentElement;
   btn.style.display = "none";
@@ -537,15 +513,14 @@ function initQuantity(productId, btn) {
 function changeQty(productId, delta) {
   if (!cartData[productId]) return;
 
-  // --- NEW STOCK CHECK LOGIC ---
-  if (delta > 0) { // Only check if they are clicking the "+" button
+  if (delta > 0) { 
     const product = products.find(p => p.id === productId);
     if (product && cartData[productId] >= product.stock) {
       alert(`Sorry, we only have ${product.stock} of these in stock!`);
-      return; // This stops the function from adding more
+      return; 
     }
   }
-  // -----------------------------
+ 
 
   cartData[productId] += delta;
   if (cartData[productId] < 1) {
@@ -562,15 +537,14 @@ function changeCartQty(id, delta) {
   const cart = getCart();
   if (!cart[id]) return;
 
-  // --- NEW STOCK CHECK LOGIC ---
+
   if (delta > 0) {
-    const product = products.find(p => p.id == id); // == instead of === because 'id' from the cart loop is a string
+    const product = products.find(p => p.id == id); 
     if (product && cart[id] >= product.stock) {
       alert(`Sorry, we only have ${product.stock} of these in stock!`);
       return; 
     }
   }
-  // -----------------------------
 
   cart[id] += delta;
   if (cart[id] < 1) {
