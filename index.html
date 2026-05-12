@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/home.css">
   <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/product.css">
 </head>
 
 <body>
@@ -61,7 +62,7 @@
         <p>100% safe</p>
       </div>
       <div class="feature-box">
-        <div class="feature-icon">💬</div>
+        <div class="feature-icon">💬</div>  
         <h3>24/7 Support</h3>
         <p>Always here to help</p>
       </div>
@@ -87,7 +88,12 @@
       </div>
     </div>
   </footer>
-
+<div id="product-modal" class="modal-overlay">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <div id="modal-details-container"></div>
+  </div>
+</div>
   <script src="js/script.js"></script>
 </body>
 </html>
